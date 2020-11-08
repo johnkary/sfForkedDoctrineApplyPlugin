@@ -42,7 +42,7 @@ EOF;
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
-    $table = Doctrine::getTable('sfGuardUser');
+    $table = Doctrine_Core::getTable('sfGuardUser');
     $users = $table->createQuery('u')->innerJoin('u.Profile p')->execute();
     $first = true;
     foreach ($users as $user)

@@ -131,14 +131,14 @@ class BasesfApplyActions extends sfActions
           $username_or_email = $this->form->getValue('username_or_email');
           if (strpos($username_or_email, '@') !== false)
           {
-            $user = Doctrine::getTable('sfGuardUser')->createQuery('u')->
+            $user = Doctrine_Core::getTable('sfGuardUser')->createQuery('u')->
                     where('u.email_address = ?', $username_or_email)->
                     fetchOne();
 
           }
           else
           {
-            $user = Doctrine::getTable('sfGuardUser')->createQuery('u')->
+            $user = Doctrine_Core::getTable('sfGuardUser')->createQuery('u')->
                     where('u.username = ?', $username_or_email)->fetchOne();
           }
           return $this->resetRequestBody($user);
@@ -223,7 +223,7 @@ class BasesfApplyActions extends sfActions
         //This got fixed (0.9.1), so if user is authenticated, and requests password change, we're still getting his id.
         $this->id = ( $this->getUser()->isAuthenticated() ) ? $this->getUser()->getGuardUser()->getId() : $this->getUser()->getAttribute('sfApplyReset', false);
         $this->forward404Unless($this->id);
-        $this->sfGuardUser = Doctrine::getTable('sfGuardUser')->find($this->id);
+        $this->sfGuardUser = Doctrine_Core::getTable('sfGuardUser')->find($this->id);
         $this->forward404Unless($this->sfGuardUser);
         $sfGuardUser = $this->sfGuardUser;
         $sfGuardUser->setPassword($this->form->getValue('password'));
