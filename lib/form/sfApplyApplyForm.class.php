@@ -43,9 +43,6 @@ class sfApplyApplyForm extends sfGuardUserProfileForm
 
         //Settings for email fields
         $this->setWidget( 'email', new sfWidgetFormInputText( array(), array('maxlength' => 255 ) ) );
-        $this->setWidget('email2', 
-                new sfWidgetFormInputText( array(), array('maxlength' => 255 ) ) );
-        $this->widgetSchema->moveField( 'email2', sfWidgetFormSchema::AFTER, 'email' );
 
         //Firstname and lastname
         $this->setWidget( 'firstname', new sfWidgetFormInputText( array(), array( 'maxlength' => 30 ) ) );
@@ -56,7 +53,6 @@ class sfApplyApplyForm extends sfGuardUserProfileForm
             'password' => 'Password',
             'password2' => 'Confirm password',
             'email' => 'Email address',
-            'email2' => 'Confirm email',
             'firstname' => 'First Name',
             'lastname' => 'Last name'
         ) );
@@ -87,10 +83,7 @@ class sfApplyApplyForm extends sfGuardUserProfileForm
                     array('invalid' => 'An account with that email address already exists. If you have forgotten your password, click "cancel", then "Reset My Password."') )
         )));
 
-        $this->setValidator('email2', new sfValidatorEmail( 
-                array( 'required' => true, 'trim' => true )));
 
-        
         $this->setValidator('firstname', new sfValidatorApplyFirstname() );
         
         $this->setValidator('lastname', new sfValidatorApplyLastname() );
@@ -103,8 +96,7 @@ class sfApplyApplyForm extends sfGuardUserProfileForm
         $preValidators = array( 
             new sfValidatorSchemaCompare( 'password', sfValidatorSchemaCompare::EQUAL,
                     'password2', array(), array('invalid' => 'The passwords did not match.') ),
-            new sfValidatorSchemaCompare( 'email', sfValidatorSchemaCompare::EQUAL,
-                    'email2', array(), array('invalid' => 'The email addresses did not match.') ) );
+        );
 
         if( $preValidator )
         {
